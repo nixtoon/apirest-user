@@ -11,4 +11,7 @@ app.get('/listarContenido', usuario.listarContenido);
 // agregar usuario post
 app.post('/addUsuario', usuario.addUsuario);
 
+// buscar usuario
+app.get('/buscarUsuario', usuario.buscarUsuario);
+
 module.exports = app;

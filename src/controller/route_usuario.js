@@ -63,9 +63,37 @@ let addUsuario = async (req, res) => {
   }
 };
 
+// Buscar usuario por nombre de usuario y contraseña
+let buscarUsuario = async (req, res) => {
+  try {
+    const { nombre_usuario, password } = req.query;
+
+    if (!nombre_usuario || !password) {
+      return res.status(400).json({ status: 400, mensaje: "Nombre de usuario y contraseña son requeridos." });
+    }
+
+    // Realiza la búsqueda en la base de datos por nombre de usuario y contraseña
+    const usuario = await Usuario.findOne({ nombre_usuario, password });
+
+    if (!usuario) {
+      return res.status(404).json({ status: 404, mensaje: "Usuario no encontrado." });
+    }
+
+    res.json({ status: 200, usuario });
+  } catch (err) {
+    res.status(500).json({
+      status: 500,
+      mensaje: "Error al buscar el usuario",
+      err
+    });
+  }
+};
+
+
 
 module.exports = {
   listarUsuarios,
   listarContenido,
   addUsuario,
+  buscarUsuario,
 };
